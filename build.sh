@@ -24,6 +24,4 @@ sonar.coverage.exclusions=tests/*.php
 sonar.host.url=http://buumi.me:9000
 EOL
 
-cat sonar-project.properties
-
 ./sonar-scanner-2.5/bin/sonar-runner
