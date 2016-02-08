@@ -24,5 +24,5 @@ EOL
 ./sonar-scanner-2.5/bin/sonar-runner
 
 # Create build artifact
-echo "Host lakka.kapsi.fi\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+echo "Host buumi.me\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 scp -r * jori@buumi.me:/home/jori/public_html/
