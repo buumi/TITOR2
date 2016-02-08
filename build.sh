@@ -3,7 +3,7 @@ set -ev
 
 # Run tests
 cd tests
-phpunit .
+phpunit --coverage-clover tests-clover.xml --log-junit tests-junit.xml .
 
 # Run SonarQube analysis
 cd ..
@@ -18,6 +18,9 @@ sonar.projectName=TITOR2
 sonar.projectVersion=1.0ALPHA
 sonar.sources=src
 sonar.tests=tests
+sonar.php.tests.reportPath=tests/tests-junit.xml
+sonar.php.coverage.reportPath=tests/tests-clover.xml
+sonar.coverage.exclusions=tests/*.php
 sonar.host.url=http://buumi.me:9000
 EOL
 
