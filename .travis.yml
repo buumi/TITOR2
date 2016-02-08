@@ -5,3 +5,6 @@ env:
 
 script:
   - sh build.sh
+
+notifications:
+  slack: titor2:9outGDN2rgdIE01E6LNFuTuF
