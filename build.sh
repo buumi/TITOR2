@@ -25,4 +25,4 @@ EOL
 
 # Create build artifact
 echo "Host lakka.kapsi.fi\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-scp -R * jori@buumi.me:/home/jori/public_html/
+scp -r * jori@buumi.me:/home/jori/public_html/
