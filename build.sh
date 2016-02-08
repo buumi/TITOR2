@@ -25,7 +25,3 @@ sonar.host.url=http://buumi.me:9000
 EOL
 
 ./sonar-scanner-2.5/bin/sonar-runner
-
-# Create build artifact
-# echo "Host buumi.me\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-# scp -r * jori@buumi.me:/home/jori/public_html/
