@@ -1,4 +1,7 @@
 <?php
+
+require_once "Database.php";
+
 /**
  * Created by PhpStorm.
  * User: jkankaanpaa
