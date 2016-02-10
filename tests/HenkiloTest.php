@@ -1,6 +1,6 @@
 <?php
 
-require_once "../src/Henkilo.php";
+require_once "../public_html/Henkilo.php";
 
 /**
  * Created by PhpStorm.
