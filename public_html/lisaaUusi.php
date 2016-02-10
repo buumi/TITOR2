@@ -10,4 +10,4 @@ require_once "Database.php";
  */
 
 $db = new Database();
-$db->insert(1);
+$db->insert($_GET["id"]);
