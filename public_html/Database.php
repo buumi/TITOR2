@@ -20,7 +20,7 @@ class Database
     }
 
     public function insert($id) {
-        $sql = "INSERT INTO MyGuests (id) VALUES (1)";
+        $sql = "INSERT INTO MyGuests (id) VALUES ($id)";
 
         if ($this->mysqli->query($sql) === TRUE) {
             echo "New record created successfully";
