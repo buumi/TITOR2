@@ -7,4 +7,4 @@
  */
 
 $db = new Database();
-$db->insert($_GET["id"]);
+$db->insert(1);
