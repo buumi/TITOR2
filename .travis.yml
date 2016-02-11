@@ -1,0 +1,10 @@
+language: php
+
+env:
+  - secure: "LOHP84tm1kUdQOceHHl7U+ZPpjVmqCdOf3z5ce0J+ou5yp1TCCjXJSoAUjSDhKcsoQmqOpzA6qGfkuNN1VmiCicASciaI6vNxWmIS/8Z4v5+gmb4mDe7aJivKi4b6Dx/+ztHpVohFJ3+WAZ5Y7j5MOsQnApSGxa4vbVHYys6UmglOj/lGX+CkMxE4sT3GIfUJroEulUKGOR22bFb+gIicZS1RXLlEl/1+CXEv4CEVlzkqnmx4pSb3pOdWaSLbLxTTw5eBZ2A16x6g0VH2XIZ0oZ3AfYCzioa7pC7uh04kqFC3JHFRddO7jARlx/yLBmnBDhvuJdZC+Iwla6ZUYqUYGtdTfFYgL+18h9fUZHeMm2N8zaPk3Dp6vlaP6mVlSItFb+dXV6xm3nncd85kqDM+6+fGnkTzp4DsBrnS02y7kpiDfYw8wKBxYbkndTNnPeAOH+AuzCcPeqyOShfU2fOrQi4qNQLcsEFQdOLxM8KT9nJQ2v9yjRUmZLqblVrhM5zlhWIA8hZtEQZ7poaPi9JjKF0vK0p5yzMJhDQoCxKTaifIt5bVzb8RlG4uIt4OhGyOd+2rbcBYXoeCMzP+BiWa4kHVzk3pJoUsP49nS8D7kYEt0/bsd34RYTYnzX1NvhRwLTPENmflMbxQ18EbCBqwCP7WWfrZ5T0NfQv5+MZ5Jw="
+
+script:
+  - cd tests && phpunit . && cd ..
+
+after_success:
+  - lftp -e "set ftp:ssl-allow no ; mirror -R public_html DEV" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
