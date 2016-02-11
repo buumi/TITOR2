@@ -16,6 +16,7 @@
   <link rel='stylesheet' href='libs/fullcalender/fullcalendar.css' />
   <!-- Kustomoinnit, esim oranssi väri -->
   <link href="css/dashboard.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -60,7 +61,6 @@
     </div>
   </div>
 
-
   <!-- Sisällytä JQuery, Bootstrap ja FullCalendar JavaScript -->
   <script src='libs/fullcalender/lib/jquery.min.js'></script>
 
@@ -73,8 +73,14 @@
   <!-- Omat Javascript funktiot -->
   <script src="js/funktiot.js"></script>
 
+  <script>
+    var CONFIG = {
+      userID: <?php echo $_GET["id"]; ?>
+    }
+  </script>
+
   <script type='text/javascript'>
-    luoKalenteri("#calendar", <?php echo $_GET["id"]; ?>);
+    luoKalenteri("#calendar", CONFIG.userID);
   </script>
 
 </body>
