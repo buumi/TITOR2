@@ -5,6 +5,7 @@
     <script src='libs/fullcalender/lib/jquery.min.js'></script>
     <script src='libs/fullcalender/lib/moment.min.js'></script>
     <script src='libs/fullcalender/fullcalendar.js'></script>
+    <script src="libs/fullcalender/lang/fi.js"></script>
     <script type='text/javascript'>
 
         $(document).ready(function() {
@@ -15,44 +16,45 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+                lang: "fi",
                 defaultDate: '2014-06-12',
                 defaultView: 'agendaWeek',
-		allDaySlot: false,
+                allDaySlot: false,
                 editable: true,
-		minTime: "08:00:00",
-		eventOverlap: function(event) {
-			return event.rendering === 'background';
-		},
-		selectable: true,
-		selectHelper: true,
-		selectConstraint: "availableForMeeting",
-		selectOverlap: function(event) {
-			return event.rendering === 'background';
-		},
-		select: function(start, end) {
-			var title = prompt('Event Title:');
-			var eventData;
-			if (title) {
-				eventData = {
-					title: title,
-					start: start,
-					end: end,
-					constraint: "availableForMeeting"
-				};
-				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-			}
-			$('#calendar').fullCalendar('unselect');
-		},
+                minTime: "08:00:00",
+                eventOverlap: function(event) {
+                    return event.rendering === 'background';
+                },
+                selectable: true,
+                selectHelper: true,
+                selectConstraint: "availableForMeeting",
+                selectOverlap: function(event) {
+                    return event.rendering === 'background';
+                },
+                select: function(start, end) {
+                    var title = prompt('Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: start,
+                            end: end,
+                            constraint: "availableForMeeting"
+                        };
+                        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                    }
+                    $('#calendar').fullCalendar('unselect');
+                },
 
-		maxTime: "16:00:00",
+                maxTime: "16:00:00",
                 events: [
-			// areas where "Meeting" must be dropped
-			{
-				id: 'availableForMeeting',
-				start: '2014-06-11T10:00:00',
-				end: '2014-06-11T16:00:00',
-				rendering: 'background'
-			}
+                    // areas where "Meeting" must be dropped
+                    {
+                        id: 'availableForMeeting',
+                        start: '2014-06-11T10:00:00',
+                        end: '2014-06-11T16:00:00',
+                        rendering: 'background'
+                    }
                 ]
             });
 
