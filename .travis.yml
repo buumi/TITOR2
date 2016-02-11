@@ -12,4 +12,4 @@ script:
   - cd tests && phpunit . && cd ..
 
 after_success:
-  - lftp -e "set ftp:ssl-allow no ; mirror -R public_html DEV" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
+  - lftp -e "mirror -R public_html DEV" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
