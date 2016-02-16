@@ -13,4 +13,4 @@ script:
   echo "Ei vielä testejä!"
 
 after_success:
-  - lftp -e "mirror -R public_html/* jori/proto2" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
+  - lftp -e "mirror -R public_html jori/proto2" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
