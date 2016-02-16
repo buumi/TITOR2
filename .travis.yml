@@ -8,8 +8,9 @@ addons:
 env:
   -   secure: "bpkQtvjr2lfx0vj7VJ8cZ2FcnIe8d52QLTM9oOgMZHKn409LCPknhb6BPo9X7ng/9iLml/YXEiO/zMWPaLxoLUlLbqzj0F4I338sv22dJl/LnGv/wkr7hdXT3G55yfexoCqDYc1kslm8/8T0VPDWUzwbNMfT2uvuAEuppEBGZTJEcidQ6goUv/Jw7ZT4DIF9w10uHGH3cgH+Dvmn4ndHUfLUYzboXS28v8Hh8w4Z7StXJ0OgZhZGmRzImp+WSZvh4evwIHyND6Dieh/nM5OhbkmK0U+G/4Us9saixT0bTNuDz6TVqwBpZ4pqx47MONAiW6Vpc/rYocfN/OFoU1rdLh+BDC1OyDtGHBanG+4+FzcY6H+dHceRJWuqaQpHEs9wWM3Pw8p7TwXmX9LAkZ+583A9EjTuptHPKytZx7xZuoa4jhht6u52ftUY50DdrKpe/dVRct6ntKhjsLKCbr/jEe+PicX7+GfXBJNNFyyeuVnLwzZIakB1FcFQ3KAs4qLevj+RTxJ6RmaEZQKmco11KgxacRgWwIemDnQIpWnYzQjxqFvZwilcwHeCbjg0l45xqJDuBWWVQ/SL7bQMQtgmsmMDIeweFBSsl0jAjomu8d/IOJ2/xOWfTNL7uzuVlGsQfelJ0QQO0NM8q7QG8I+zeEiIwOosUVyV3iwN7ERFM9U="
 
-#script:
+script:
   #- cd tests && phpunit . && cd ..
+  echo "Ei vielä testejä!"
 
 after_success:
   - lftp -e "mirror -R public_html/* jori/proto2" -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_HOST}
