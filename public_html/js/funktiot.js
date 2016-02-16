@@ -2,8 +2,8 @@
  * Created by jkankaanpaa on 2/11/16.
  */
 
-function muutaTapahtumaa(event) {
-    var muokkaavaraustaurl = "muokkaavarausta.php?id" + event.id + "&start=" + event.start.format() + "&stop=" + event.end.format()
+function muutaTapahtumaa(start, stop, title) {
+    var muokkaavaraustaurl = "muokkaavarausta.php?start=" + start + "&stop=" + stop + "&title=" + title
 
     $.ajax({
         url: muokkaavaraustaurl
@@ -41,31 +41,30 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
         eventColor: '#e67e22',
         allDaySlot: false,
         editable: true,
-        eventOverlap: function(event) {
-            return event.rendering === 'background';
-        },
         selectable: true,
         selectHelper: true,
-        selectConstraint: "availableForMeeting",
-        selectOverlap: function(event) {
-            return event.rendering === 'background';
-        },
-        select: function(start, end) {
-            var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end,
-                    constraint: "availableForMeeting"
-                };
-                $(kohdeElementti).fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $(kohdeElementti).fullCalendar('unselect');
-        },
+        //select: luoLisaysPopup,
         events: "haevaraukset.php?id=" + kayttajaId,
-        eventResize: muutaTapahtumaa,
-        eventDrop: muutaTapahtumaa
     });
+}
+
+function lisaysPopupTallenna() {
+    var kuvaus = $('#kuvaus').val();
+    var start = $('#alkamisaika').text();
+    var stop = $('#loppumisaika').text();
+
+    muutaTapahtumaa(start, stop, kuvaus);
+
+    $("#calendar").fullCalendar('refetchEvents');
+
+    $('#myModal').modal('hide')
+}
+
+function luoLisaysPopup(start, end) {
+    $('#alkamisaika').text(start.format())
+    $('#loppumisaika').text(end.format())
+
+    $('#kuvaus').val("")
+
+    $('#myModal').modal()
 }

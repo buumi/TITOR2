@@ -1,6 +1,6 @@
 <?php
 
-$varaus_id = $_GET["id"];
+$title = $_GET["title"];
 $uusi_alkamisaika = $_GET["start"];
 $uusi_paattymisaika = $_GET["stop"];
 
@@ -12,7 +12,7 @@ if ($db->connect_errno) {
     echo "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 }
 
-$query = "UPDATE varaus SET start='$uusi_alkamisaika', stop='$uusi_paattymisaika' WHERE idvaraus=1";
+$query = "INSERT INTO varaus (start, stop, title, opiskelija_idopiskelija, opettaja_idopettaja) VALUES ('$uusi_alkamisaika', '$uusi_paattymisaika', '$title', '55555', '12345')";
 
 $result = $db->query($query);
 
