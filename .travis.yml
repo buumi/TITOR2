@@ -8,4 +8,4 @@ script:
   echo "Ei vielä testejä!"
 
 after_success:
-  - rsync -avz --delete public_html/ jori@37.139.15.227:/var/www/html/harkkatyo
+  - rsync -avz --delete public_html/ buumi@37.139.15.227:/home/buumi/harkkatyo
