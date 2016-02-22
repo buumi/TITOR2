@@ -43,7 +43,7 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
         editable: true,
         selectable: true,
         selectHelper: true,
-        //select: luoLisaysPopup,
+        select: luoLisaysPopup,
         events: "haevaraukset.php?id=" + kayttajaId,
     });
 }

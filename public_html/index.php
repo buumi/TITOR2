@@ -1,4 +1,4 @@
-<?php #require_once "session.php"; ?>
+<?php require_once "session.php"; ?>
 
 <!DOCTYPE html>
 <html lang="fi">
@@ -62,7 +62,7 @@
         </div><!--/.row-->
     </div><!--/.container-->
 
-    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div>
-    </div>--><!--/.page-container-->
+    </div><!--/.page-container-->
     <!-- script references -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
@@ -104,8 +104,6 @@
 
     <!-- Sisällytä JQuery, Bootstrap ja FullCalendar JavaScript -->
     <script src='libs/fullcalender/lib/jquery.min.js'></script>
-
-    <script src="libs/bootstrap/js/bootstrap.js"></script>
 
     <script src='libs/fullcalender/lib/moment.min.js'></script>
     <script src='libs/fullcalender/fullcalendar.js'></script>
@@ -115,14 +113,14 @@
     <script src="js/funktiot.js"></script>
 
     <script type='text/javascript'>
-       /* var CONFIG = {
+        /* var CONFIG = {
             userID: <?php echo $id; ?>,
             nimi: <?php echo '"' . $nimi . '"'; ?>,
             taso: <?php echo '"' . $taso . '"'; ?>
         }
-
         */
-        luoKalenteri("#calendar", 55555);
+
+        luoKalenteri("#calendar",  <?php echo $_GET[id]; ?>);
     </script>
 
 </body>
