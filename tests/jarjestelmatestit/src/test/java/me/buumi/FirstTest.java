@@ -13,7 +13,7 @@ import java.net.URL;
 public class FirstTest {
 
     public final String USERNAME = "buhmen";
-    public final String ACCESS_KEY = "2ef1f97f-e221-4f6b-a1ff-ce23bf293d97";
+    public final String ACCESS_KEY = System.getenv("ACCESS_KEY")
     public final String URL = "http://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:80/wd/hub";
 
     @Test
