@@ -13,4 +13,4 @@ script:
   - mvn test & cd ../..
 
 after_success:
-  - lftp -e 'mirror --delete -R public_html/ harkkatyo;' -u $LOGIN,$PASSWORD $SERVER
+  - lftp -e 'mirror --delete -R public_html/ harkkatyo; quit' -u $LOGIN,$PASSWORD $SERVER
