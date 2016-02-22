@@ -1,5 +1,13 @@
 language: php
 
+addons:
+  apt:
+    packages:
+    - lftp
+
+env:
+  - secure: "Q4tLoCueNv2wFUWip07F1aEoUaLP9nZGmvn5xUYoShgLJlxJKCGJT4zQWwwlnNqxqGlO3koorSbUS74FQbrPvctiByPJmcDwn20YraeYnbayAWusSdL5tyaBegbPqrKXnD0NvVVVSmeRI7/e0Fsj1dOlazJD097y2i42Da3O17wJuVQZSXibaK/nyGbNO1C+Chcz+081kd7bKEWSXdFBTv7+puHdZufeZLE78NPKcCnFHj3kaAnabL2PkxVyw6p7lGRCzpW10lJnSmrPsnugFoL1NxtJPesRy7doPexLh/AbtHOBwxi9TgGtXth9X3x2trL77FsCAJhSEonHnlh4zXgsOckDsSp60cJAikH5bDaWD6DEwsoLEQrYyTClBKXWKiNXyrtuni1SljkbLE/lEygVttFdVCn5/1pi2IVy3SWhJ1Mq0EKsYr5QfWG0ObOu63EDzq31JxXOwG8dH8MIuUv0ifg8iP+d29eWGqvcTTpLc6/3jLvESPpgqb6ogVSwihm1VvdO3I8tPhnO7AHpQtolbO298qBNGVnDsUj043IDcv+mORdebzo9JPjIjin3dNCmBCwibX0jo5sQVYXuLpi3jwQamS27Hna196TEU5qseRSE0RFlwPgni54FA3oN9Ctahz6MIVwy6TmOYiyhwU0EsBKtTjEPErTPARxzzuE="
+
 before_script:
   - echo -e "Host 37.139.15.227\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
@@ -8,4 +16,4 @@ script:
   echo "Ei vielä testejä!"
 
 after_success:
-  - rsync -avz --delete public_html/ buumi@37.139.15.227:/home/buumi/harkkatyo
+  - lftp -e 'mirror -R public_html/ harkkatyo;' -u $LOGIN,$PASSWORD $SERVER
