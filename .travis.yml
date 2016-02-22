@@ -1,9 +1,7 @@
 language: php
 
-addons:
-  apt:
-    packages:
-    - rsync
+before_script:
+  - echo -e "Host 37.139.15.227\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 script:
   #- cd tests && phpunit . && cd ..
