@@ -84,8 +84,8 @@ public class AutentikointiTest {
     public void kirjauduUlos_pitäisiMennaKirjautumissivulle() {
         driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html");
 
-        driver.findElement(By.name("tunnus")).sendKeys("vaara_tunnus");
-        driver.findElement(By.name("salasana")).sendKeys("vaara_salasana");
+        driver.findElement(By.name("tunnus")).sendKeys("55555");
+        driver.findElement(By.name("salasana")).sendKeys("12345");
 
         driver.findElement(By.name("salasana")).submit();
 
