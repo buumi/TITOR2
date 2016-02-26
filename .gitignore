@@ -1,3 +1,4 @@
 .idea
-tests/jarjestelmatestit/target
-tests/jarjestelmatestit/.idea
+**/target
+**/.idea
+**/*.iml
