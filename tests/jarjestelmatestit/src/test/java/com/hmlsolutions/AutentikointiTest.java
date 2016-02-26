@@ -89,6 +89,9 @@ public class AutentikointiTest {
 
         driver.findElement(By.name("salasana")).submit();
 
+        Assert.assertNotNull(driver.findElement(By.id("omaKalenteriLinkki")), "Päädytyllä sivulla ei ole linkkiä" +
+                " omaan kalenteriin");
+
         driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html/logout.php");
         driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html");
 
