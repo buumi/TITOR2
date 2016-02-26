@@ -80,6 +80,22 @@ public class AutentikointiTest {
                 "Päädytyllä sivulla ei ole otsikkoa 'Ajanvaraus kirjautuminen'");
     }
 
+    @Test
+    public void kirjauduUlos_pitäisiMennaKirjautumissivulle() {
+        driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html");
+
+        driver.findElement(By.name("tunnus")).sendKeys("vaara_tunnus");
+        driver.findElement(By.name("salasana")).sendKeys("vaara_salasana");
+
+        driver.findElement(By.name("salasana")).submit();
+
+        driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html/logout.php");
+        driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html");
+
+        Assert.assertTrue(driver.getTitle().equals("Ajanvaraus kirjautuminen"),
+                "Päädytyllä sivulla ei ole otsikkoa 'Ajanvaraus kirjautuminen'");
+    }
+
     @AfterMethod
     public void logout() {
         driver.get("http://hmlsolutions.com/ryhma2/sivu/public_html/logout.php");
