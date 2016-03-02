@@ -6,6 +6,8 @@
  * Time: 20:08
  */
 
+require_once "apufunktiot.php";
+
 $db = new Tietokanta();
 
 $tee = $_GET['tee'];
@@ -40,7 +42,10 @@ switch ($tee) {
 
         $db->sulje_aika($kuka_vapauttaa, $alkamisaika, $loppumisaika);
         break;
-
+    case 10:
+        $nimen_alku = $_GET["nimen_alku"];
+        echo hae_opettajat($nimen_alku);
+        break;
 }
 
 ?>

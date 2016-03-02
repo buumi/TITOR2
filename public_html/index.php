@@ -1,4 +1,12 @@
-<?php require_once "session.php"; ?>
+<?php require_once "session.php"; 
+    if (isset($_GET["id"])) {
+        $kalenterin_id = $_GET["id"];
+    }
+    else {
+        $kalenterin_id = $id;
+    }
+
+?>
 
 <!DOCTYPE html>
 <html lang="fi">
@@ -37,7 +45,7 @@
             <!-- sidebar -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <ul class="nav">
-                    <li> <a id="omaKalenteriLinkki" href="index.php?id=<?php echo $id ?>">Oma kalenteri <span class="sr-only">(current)</span></a></li>
+                    <li> <a href="index.php?id=<?php echo $id ?>">Oma kalenteri <span class="sr-only">(current)</span></a></li>
                     <li></li>
                     <li>
                         <div class="input-group input-group-sm">
@@ -97,6 +105,56 @@
             </div>
         </div>
     </div><!--/.page-container-->
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Tiedot</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+			<input type="hidden" name="eventID" id="eventID" value="">
+                        <div class="col-md-2">
+                            Alkamisaika:
+                        </div>
+                        <div id="alkamisaika2" class="col-md-2">
+
+                        </div>
+                        <div class="col-md-2">
+                            Loppumisaika:
+                        </div>
+                        <div id="loppumisaika2" class="col-md-2">
+
+                        </div>
+                        <div class="col-md-2">
+                            Tapaamisen syy:
+                        </div>
+                        <div id="syy" class="col-md-2">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kuvaus2">Muuta tapaamisen syy:</label>
+                        <input type="text" class="form-control" id="kuvaus2" required="true">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="muuta" onclick="tietoPopupMuutaSyy()" class="btn btn-primary">Muuta syy</button>
+                    <button type="button" id="poista" onclick="tietoPopupPoista()" class="btn btn-danger">Poista varaus</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Takaisin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
     <!-- script references -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
@@ -104,6 +162,8 @@
 
     <!-- Sisällytä JQuery, Bootstrap ja FullCalendar JavaScript -->
     <script src='libs/fullcalender/lib/jquery.min.js'></script>
+
+    <script src="libs/bootstrap/js/bootstrap.js"></script>
 
     <script src='libs/fullcalender/lib/moment.min.js'></script>
     <script src='libs/fullcalender/fullcalendar.js'></script>
@@ -113,14 +173,14 @@
     <script src="js/funktiot.js"></script>
 
     <script type='text/javascript'>
-        /* var CONFIG = {
+        var CONFIG = {
             userID: <?php echo $id; ?>,
             nimi: <?php echo '"' . $nimi . '"'; ?>,
             taso: <?php echo '"' . $taso . '"'; ?>
         }
-        */
+        
 
-        luoKalenteri("#calendar",  <?php echo $_GET[id]; ?>);
+        luoKalenteri("#calendar",  <?php echo $kalenterin_id; ?>);
     </script>
 
 </body>
