@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../public_html/Tietokanta.php";
+require_once "../public_html/Tietokanta.php";
 
 /**
  * Created by PhpStorm.
