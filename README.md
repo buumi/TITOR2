@@ -2,7 +2,8 @@
 
 Integraatiotestit https://github.com/buumi/TitoR2_jarjestelmatestit
 
-### Käyttöohje Git-ohjelmalle. (Githubilla myös rajoittunut verkkokäyttöliittymä)
+### Käyttöohje
+Tässä lyhyt ohje Git-ohjelmalle. Githubilla on myös rajoittunut verkkokäyttöliittymä jota voi käyttää Gitin sijaan.  
 
 #### Aloitus
 Asenna Git  
