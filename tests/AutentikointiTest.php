@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../public_html/apufunktiot.php";
+require_once "../public_html/apufunktiot.php";
 
 /**
  * Created by IntelliJ IDEA.
