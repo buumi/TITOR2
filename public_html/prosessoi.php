@@ -7,6 +7,7 @@
  */
 
 require_once "apufunktiot.php";
+require_once "Tietokanta.php";
 
 $db = new Tietokanta();
 
@@ -43,7 +44,7 @@ switch ($tee) {
         $db->sulje_aika($kuka_vapauttaa, $alkamisaika, $loppumisaika);
         break;
     case 10:
-        $nimen_alku = $_GET["nimen_alku"];
+        $nimen_alku = $_GET['nimen_alku'];
         echo hae_opettajat($nimen_alku);
         break;
 }

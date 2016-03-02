@@ -21,7 +21,7 @@ function naytaTulokset(str, kohdeElementti) {
                 document.getElementById(kohdeElementti).innerHTML = xmlhttp.responseText;
             }
         };
-        xmlhttp.open("GET", "haeKayttajaa.php?nimi=" + str, true);
+        xmlhttp.open("GET", "prosessoi.php?tee=10&nimen_alku=" + str, true);
         xmlhttp.send();
     }
 }

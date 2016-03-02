@@ -56,7 +56,7 @@ function hae_opettajat($nimen_alku)
 
   while ($entry = $result->fetch_assoc()) {
       if (strpos(strtolower($entry["nimi"]), strtolower($nimen_alku)) === 0)
-          $tulos += "<a class='list-group-item' href=index.php?id=" . $entry['idopettaja'] . ">" . $entry['nimi'] . "</a>";
+          $tulos .= "<a class='list-group-item' href=index.php?id=" . $entry['idopettaja'] . ">" . $entry['nimi'] . "</a>";
   }
 
   return $tulos;
