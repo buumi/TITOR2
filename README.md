@@ -1,3 +1,4 @@
-# TitoR2
+## TitoR2
 
-[![Build Status](https://travis-ci.org/buumi/TitoR2.svg?branch=master)](https://travis-ci.org/buumi/TitoR2)
+Integraatiotestit https://github.com/buumi/TitoR2_jarjestelmatestit
+
