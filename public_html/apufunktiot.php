@@ -61,3 +61,27 @@ function hae_opettajat($nimen_alku)
 
   return $tulos;
 }
+
+function anna_kalenterin_omistaja($oma_id, $kalenterin_id) {
+  if ($oma_id == $kalenterin_id) {
+    return "Oma kalenterisi";
+  }
+
+  $db = new mysqli("localhost", "np1172_r2", "R2tito5000", "np1172_r2");
+
+  if ($db->connect_errno) {
+      echo "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
+  }
+
+  $query = "SELECT * FROM opettaja where idopettaja = $kalenterin_id";
+  $result = $db->query($query);
+  
+  if ($result->num_rows < 1) {
+    return "Kalenteria ei löydy";
+  }
+  else {
+      while ($entry = $result->fetch_assoc()) {
+        return $entry["nimi"];
+      }
+  }
+}

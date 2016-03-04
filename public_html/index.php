@@ -1,4 +1,7 @@
-<?php require_once "session.php"; 
+<?php 
+    require_once "session.php"; 
+    require_once "apufunktiot.php";
+    
     if (isset($_GET["id"])) {
         $kalenterin_id = $_GET["id"];
     }
@@ -50,7 +53,7 @@
                     <li>
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon3"></span>
-                            <input onkeyup="naytaTulokset(this.value, 'hakutulokset')" type="text" class="form-control" placeholder="Hae kalenteria" aria-describedby="sizing-addon3">
+                            <input id="kalenterinHakuKentta" onkeyup="naytaTulokset(this.value, 'hakutulokset')" type="text" class="form-control" placeholder="Hae kalenteria" aria-describedby="sizing-addon3">
                         </div>
                     </li>
                     <li>
@@ -62,8 +65,8 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9">
-                <h3 class="text-primary">
-                    Kalenteri
+                <h3 id="kalenterinOmistajaTeksti" class="text-primary">
+                    <?php echo anna_kalenterin_omistaja($id, $kalenterin_id); ?>
                 </h3>
                 <div id="calendar"></div>
             </div><!-- /.col-xs-12 main -->
@@ -175,6 +178,7 @@
     <script type='text/javascript'>
         var CONFIG = {
             userID: <?php echo $id; ?>,
+            kalenterinID: <?php echo $kalenterin_id; ?>,
             nimi: <?php echo '"' . $nimi . '"'; ?>,
             taso: <?php echo '"' . $taso . '"'; ?>
         }
