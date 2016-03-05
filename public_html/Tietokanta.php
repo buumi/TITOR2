@@ -14,35 +14,49 @@ class Tietokanta
         }
     }
 
-    public function lisaa_varaus($kuka_varaa, $kenelta_varaa, $alkamisaika, $loppumisaika, $asia) {
-        $sql = "SELECT * FROM `vapaa` WHERE opettaja_idopettaja =".$kenelta_varaa." AND start =".$alkamisaika." AND stop=".$loppumisaika;
-        if ($this->db->query($sql) === TRUE) {
+    public function lisaa_varaus($kuka_varaa, $kenelta_varaa, $alkamisaika, $loppumisaika, $asia, $taso) {
+        
+		$tsek = "SELECT * FROM `opettaja` WHERE `idopettaja` =$kenelta_varaa";
+		$query = $this->db->query($tsek);
+		if($taso == "OPISKELIJA") {
+           
+			$sql = "INSERT INTO varaus(`title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES('$asia','$alkamisaika','$loppumisaika','$kuka_varaa','$kenelta_varaa')";
+
+			$this->db->query($sql);
+
+			$lastid = mysqli_insert_id($this->db);
+			echo json_encode(array('status'=>'success','eventid'=>$lastid));
+         
+		 
+		}
+		else {
+			echo json_encode(array('status'=>'failed'));
+			
+		}
+          
 
 
-            $sql = "INSERT INTO `np1172_r2`.`varaus` (`idvaraus`, `opiskelija_idopiskelija`, `opettaja_idopettaja`, `start`, `stop`, `title`) VALUES (NULL, '" . $kuka_varaa . "', '" . $kenelta_varaa . "', '" . $alkamisaika . "', '" . $loppumisaika . "', '" . $asia . "')";
-
-
-            if ($this->db->query($sql) === TRUE) {
-
-
-                $lastid = mysqli_insert_id($this->db);
-                echo json_encode(array('status' => 'success', 'eventid' => $lastid));
-            }
-
-
-        }
+        
 
     }
 
-    public function poista_varaus($varauksen_id) {
+    public function poista_varaus($varauksen_id, $kuka_poistaa) {
 
 
+		$sql = "SELECT opettaja_idopettaja FROM varaus WHERE idvaraus = '$varauksen_id'";
+		if ($this->db->query($sql) == $kuka_poistaa) {
+			$sql = "DELETE FROM `np1172_r2`.`varaus` WHERE `varaus`.`idvaraus` ='$varauksen_id.'";
 
-
-        $sql = "DELETE FROM `np1172_r2`.`varaus` WHERE `varaus`.`idvaraus` = ".$varauksen_id."";
-
-        $this->db->query($sql);
-
+			$tulos = $this->db->query($sql);
+		
+		
+			if ($tulos) {
+				echo json_encode(array('status'=>'success'));
+		}
+			else {
+				echo json_encode(array('status'=>'failed'));
+		}
+		}
 
 
     }
@@ -52,7 +66,7 @@ class Tietokanta
 
 
         $sql = "INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`) VALUES (NULL, '".$kuka_vapauttaa."', '".$alkamisaika."', '".$loppumisaika."')";
-
+		
 
 
 
@@ -72,12 +86,27 @@ class Tietokanta
     }
 
 
-    public function hae_varaukset() {
+    public function hae_varaukset($kenen_kalenteri) {
+		
+	$temp_array = array();
 
+	$query = "SELECT * FROM varaus WHERE opettaja_idopettaja = $kenen_kalenteri OR opiskelija_idopiskelija = $kenen_kalenteri";
+	$result = $this->db->query($query);
 
+	while ($value = $result->fetch_assoc()) {
+		$entry = array("id"=>$value['idvaraus'], "start"=>$value['start'], "end"=>$value['stop'], "title"=>$value['title']);
+		array_push($temp_array, $entry);
+	}
 
+	$query = "SELECT * FROM vapaa WHERE opettaja_idopettaja = $kenen_kalenteri";
+	$result = $this->db->query($query);
 
+	while ($value = $result->fetch_assoc()) {
+		$entry = array("id"=>$value['idvaraus'], "start"=>$value['start'], "end"=>$value['stop'], "rendering"=>"background");
+		array_push($temp_array, $entry);
+	}
 
-
+	echo json_encode($temp_array);
+		
     }
 }

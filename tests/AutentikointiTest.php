@@ -11,19 +11,19 @@ require_once "../public_html/apufunktiot.php";
 class AutentikointiTest extends PHPUnit_Framework_TestCase
 {
     public function testKirjauduSisaan_opettajanTunnus_onOpettaja() {
-        $this->assertTrue(onko_opettaja("12345", "testi"));
+        $this->assertTrue(onko_opettaja("44444", "827ccb0eea8a706c4c34a16891f84e7b"));
     }
 
     public function testKirjauduSisaan_opettajanTunnus_eiOleOpiskelija() {
-        $this->assertFalse(onko_opiskelija("12345", "testi"));
+        $this->assertFalse(onko_opiskelija("44444", "827ccb0eea8a706c4c34a16891f84e7b"));
     }
 
     public function testKirjauduSisaan_opiskelijaTunnus_onOpiskelija() {
-        $this->assertTrue(onko_opiskelija("55555", "12345"));
+        $this->assertTrue(onko_opiskelija("33333", "827ccb0eea8a706c4c34a16891f84e7b"));
     }
 
     public function testKirjauduSisaan_opiskelijaTunnus_eiOleOpettaja() {
-        $this->assertFalse(onko_opettaja("55555", "12345"));
+        $this->assertFalse(onko_opettaja("33333", "827ccb0eea8a706c4c34a16891f84e7b"));
     }
 
     public function testKirjauduSisaan_vaaraTunnus_eiOleOpettaja() {

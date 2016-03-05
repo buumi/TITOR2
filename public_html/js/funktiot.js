@@ -3,7 +3,7 @@
  */
 
 function muutaTapahtumaa(start, stop, title) {
-    var muokkaavaraustaurl = "muokkaavarausta.php?start=" + start + "&stop=" + stop + "&title=" + title
+    var muokkaavaraustaurl = "prosessoi.php?start=" + start + "&stop=" + stop + "&title=" + title +"&tee=0"
 
     $.ajax({
         url: muokkaavaraustaurl
@@ -21,7 +21,7 @@ function naytaTulokset(str, kohdeElementti) {
                 document.getElementById(kohdeElementti).innerHTML = xmlhttp.responseText;
             }
         };
-        xmlhttp.open("GET", "prosessoi.php?tee=10&nimen_alku=" + str, true);
+        xmlhttp.open("GET", "haeKayttajaa.php?nimi=" + str, true);
         xmlhttp.send();
     }
 }
@@ -45,7 +45,7 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
         selectable: true,
         selectHelper: true,
         select: luoLisaysPopup,
-        events: "haevaraukset.php?id=" + kayttajaId,
+        events: "prosessoi.php?tee=4&id=" + kayttajaId,
         eventClick: luoTietoPopup,
         eventDrop: function(event, delta, revertFunc) {
             var title = event.title;
@@ -69,7 +69,7 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
                 },
                 error: function(e){
                     revertFunc();
-                    alert('Error processing your request: '+e.responseText);
+                    alert('Error prosessoiing your request: '+e.responseText);
                 }
             });
         },
@@ -89,7 +89,7 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
                 },
                 error: function(e){
                     revertFunc();
-                    alert('Error processing your request: '+e.responseText);
+                    alert('Error prosessoiing your request: '+e.responseText);
                 }
             });
         },
@@ -112,8 +112,8 @@ function lisaysPopupTallenna() {
         }
         */
         $.ajax({
-            url: 'process.php',
-            data: 'type=new&title=' + title + '&startdate=' + start + '&enddate=' + end,
+            url: 'prosessoi.php',
+            data: 'tee=0&title=' + title + '&start=' + start + '&stop=' + end,
             type: 'POST',
             dataType: 'json',
 
@@ -144,7 +144,7 @@ function luoTietoPopup(event, jsEvent, view) {
     $('#loppumisaika2').text(event.end)
 
     $('#eventID').val(event.id)
-
+console.log(event);
     $('#syy').text(event.title)
     $('#kuvaus2').val("")
 
@@ -156,8 +156,8 @@ function tietoPopupPoista() {
     var con = confirm('Haluatko varmasti poistaa varauksen?');
     if(con == true) {
         $.ajax({
-            url: 'process.php',
-            data: 'type=remove&eventid='+id,
+            url: 'prosessoi.php',
+            data: 'tee=1&eventid='+id,
             type: 'POST',
             dataType: 'json',
             success: function(response){
@@ -169,7 +169,7 @@ function tietoPopupPoista() {
                 }
             },
             error: function(e){
-                alert('Error processing your request: '+e.responseText);
+                alert('Error prosessoiing your request: '+e.responseText);
             }
         });
     }
@@ -199,7 +199,7 @@ function tietoPopupMuutaSyy(){
             //getFreshEvents();
         },
         error: function(e){
-            alert('Error processing your request: '+e.responseText);
+            alert('Error prosessoiing your request: '+e.responseText);
         }
 
     });
