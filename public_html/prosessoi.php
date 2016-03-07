@@ -13,32 +13,37 @@ if ($joo == 4) {
 	$tee = $joo;
 }
 
-
+if ($tee == 0 && $taso =="OPETTAJA") { // väliaikainen
+	$tee = 2;
+}
 
 switch ($tee) {
     case 0:
-        $kuka_varaa = $id;
-        $kenelta_varaa = $_GET['id'];
+        
+        $kenelta_varaa = $_POST['id'];
         $alkamisaika = $_POST['start'];
         $loppumisaika = $_POST['stop'];
         $asia  = $_POST['title'];
-
-		$kenelta_varaa = 12345;
 		
-        $db->lisaa_varaus($kuka_varaa, $kenelta_varaa, $alkamisaika, $loppumisaika, $asia, $taso);
+		
+		$db->lisaa_varaus($id, $kenelta_varaa, $alkamisaika, $loppumisaika, $asia, $taso);
+		
         break;
     case 1:
         $varauksen_id = $_POST['eventid'];
-
-        $db->poista_varaus($varauksen_id);
+		
+        $db->poista_varaus($varauksen_id, $id, $taso);
         break;
     case 2:
         $kuka_vapauttaa = $_POST['id'];
         $loppumisaika = $_POST['stop'];
         $alkamisaika = $_POST['start'];
         $onko_toistuva = $_POST['toistuva'];
-
-        $db->vapauta_aika($kuka_vapauttaa, $loppumisaika, $alkamisaika, $onko_toistuva);
+		$_kenelta_varaa = $_GET['id'];
+		$onko_toistuva = 0; //poista
+		
+        $db->vapauta_aika($id, $alkamisaika, $loppumisaika, $onko_toistuva, $kenelta_varaa, $taso);
+		
         break;
     case 3:
         $kuka_vapauttaa = $_POST['id'];
@@ -49,7 +54,7 @@ switch ($tee) {
         break;
 	case 4: 
 		$iidee = $_GET['id'];
-		$db->hae_varaukset($iidee);
+		$db->hae_varaukset($iidee, $id, $taso);
 		break;
 
 }
