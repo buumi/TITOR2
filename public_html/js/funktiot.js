@@ -59,8 +59,8 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
             var start = event.start.format();
             var end = (event.end == null) ? start : event.end.format();
             $.ajax({
-                url: 'process.php',
-                data: 'type=resetdate&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
+                url: 'prosessoi.php',
+                data: 'tee=6&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
                 type: 'POST',
                 dataType: 'json',
                 success: function(response){
@@ -79,8 +79,8 @@ function luoKalenteri(kohdeElementti, kayttajaId) {
             var end = event.end.format();
             var start = event.start.format();
             $.ajax({
-                url: 'process.php',
-                data: 'type=resetdate&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
+                url: 'prosessoi.php',
+                data: 'tee=6&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
                 type: 'POST',
                 dataType: 'json',
                 success: function(response){
@@ -109,6 +109,7 @@ function lisaysPopupTallenna() {
             title: title,
             start: start,
             end: end
+			
         }
         */
         $.ajax({
@@ -187,8 +188,8 @@ function tietoPopupMuutaSyy(){
 
     console.log('type=changetitle&title='+title+'&eventid='+id);
     $.ajax({
-        url: 'process.php',
-        data: 'type=changetitle&title='+title+'&eventid='+id,
+        url: 'prosessoi.php',
+        data: 'tee=5&title='+title+'&eventid='+id,
         type: 'POST',
         dataType: 'json',
 

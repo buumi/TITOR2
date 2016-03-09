@@ -24,6 +24,7 @@ switch ($tee) {
         $alkamisaika = $_POST['start'];
         $loppumisaika = $_POST['stop'];
         $asia  = $_POST['title'];
+		$kenelta_varaa = 12345; // poista väliaikainen
 		
 		
 		$db->lisaa_varaus($id, $kenelta_varaa, $alkamisaika, $loppumisaika, $asia, $taso);
@@ -31,8 +32,8 @@ switch ($tee) {
         break;
     case 1:
         $varauksen_id = $_POST['eventid'];
-		
-        $db->poista_varaus($varauksen_id, $id, $taso);
+		$alkamisaika = $_POST['start'];
+        $db->poista_varaus($varauksen_id, $id, $taso, $alkamisaika);
         break;
     case 2:
         $kuka_vapauttaa = $_POST['id'];
@@ -53,10 +54,21 @@ switch ($tee) {
         $db->sulje_aika($kuka_vapauttaa, $alkamisaika, $loppumisaika);
         break;
 	case 4: 
-		$iidee = $_GET['id'];
-		$db->hae_varaukset($iidee, $id, $taso);
+		$kenen_kalenteri = $_GET['id'];
+		echo $db->hae_varaukset($kenen_kalenteri, $id, $taso);
 		break;
-
+	case 5:
+		$varauksen_id = $_POST['eventid'];
+		$uusi_syy = $_POST['title'];
+		
+		$db->muuta_syy($varauksen_id, $id, $uusi_syy, $taso);
+		break;
+	case 6:
+		$varauksen_id = $_POST['eventid'];
+		$loppumisaika = $_POST['stop'];
+        $alkamisaika = $_POST['start'];
+		$asia  = $_POST['title'];
+		$db->muuta_aika($varauksen_id, $id, $alkamisaika, $loppumisaika, $asia, $taso);
 }
 
 ?>
