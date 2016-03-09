@@ -204,6 +204,123 @@ class TietokantaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->db->db->query('SELECT * FROM `np1172_r2`.`vapaa` WHERE opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Vapaa-aika poistui vaikka ei pitäisi");
     }
 
+    public function testOpiskelijaMuutaOmanVarauksenSyyta_onnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_syy(99999, $this->opiskelijaID1, "UUSI SYY", "OPISKELIJA");
+        $this->assertEquals(1, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE title = "UUSI SYY" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Syy ei muuttunut vaikka pitäisi");
+    }
+
+    public function testOpiskelijaMuutaToisenVarauksenSyyta_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_syy(99999, $this->opiskelijaID2, "UUSI SYY", "OPISKELIJA");
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE title = "UUSI SYY" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Syy muuttui vaikka ei pitäisi");
+    }
+
+    public function testOpettajaMuutaVarauksenSyyta_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_syy(99999, $this->opettajaID1, "UUSI SYY", "OPISKELIJA");
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE title = "UUSI SYY" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Syy muuttui vaikka ei pitäisi");
+    }
+
+    public function testOpiskelijamuutaAika_omaVarausJaAikaEiLukkiutunut_onnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_aika(99999, $this->opiskelijaID1, '2017-03-15 01:00:00','2017-03-15 03:00:00', "testi", "OPISKELIJA");
+
+        $this->assertEquals(1, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE start = "2017-03-15 01:00:00" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika ei vaihtunut vaikka pitäisi");
+    }
+
+    public function testOpiskelijaMuutaAika_uusiAikaEiVapaa_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_aika(99999, $this->opiskelijaID1, '2017-03-16 01:00:00','2017-03-16 03:00:00', "testi", "OPISKELIJA");
+
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE start = "2017-03-16 01:00:00" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vaihtui vaikka ei pitäisi");
+    }
+
+    public function testOpiskelijaMuutaAika_omaVarausJaAikaLukkiutunut_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2015-03-15 00:00:00', '2015-03-15 23:00:00', true, '2015-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2015-03-15 00:00:00','2015-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_aika(99999, $this->opiskelijaID1, '2015-03-15 01:00:00','2015-03-15 03:00:00', "testi", "OPISKELIJA");
+
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE start = "2015-03-16 01:00:00" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vaihtui vaikka ei pitäisi");
+    }
+
+    public function testOpettajaMuutaAika_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_aika(99999, $this->opettajaID1, '2017-03-15 01:00:00','2017-03-15 03:00:00', "testi", "OPETTAJA");
+
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE start = "2017-03-15 01:00:00" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vaihtui vaikka ei pitäisi");
+    }
+
+    public function testOpiskelijaMuutaAika_toisenAika_epaonnistuu() {
+        $this->suorita_sql("INSERT INTO `np1172_r2`.`vapaa` (`idvapaa`, `opettaja_idopettaja`, `start`, `stop`, `toistuva`, `sulkeutumisaika`) VALUES (2, '". $this->opettajaID1 . "', '2017-03-15 00:00:00', '2017-03-15 23:00:00', true, '2017-03-13 00:00:00');");
+        $this->suorita_sql("INSERT INTO varaus(`idvaraus`, `title`, `start`, `stop`,`opiskelija_idopiskelija`,`opettaja_idopettaja`) VALUES(99999, 'testi','2017-03-15 00:00:00','2017-03-15 02:00:00','" . $this->opiskelijaID1 . "','". $this->opettajaID1 ."')");
+
+        $this->db = new Tietokanta();
+
+        $this->db->muuta_aika(99999, $this->opiskelijaID2, '2017-03-15 01:00:00','2017-03-15 03:00:00', "testi", "OPISKELIJA");
+
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`varaus` WHERE start = "2017-03-15 01:00:00" AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vaihtui vaikka ei pitäisi");
+    }
+
+    public function testOpettajaLisaaNormaaliAika_onnistuu() {
+        $this->db = new Tietokanta();
+
+        $this->db->vapauta_aika($this->opettajaID1, "2017-03-15 01:00:00", "2017-03-15 05:00:00", false, $this->opettajaID1, "OPETTAJA");
+        $this->assertEquals(1, $this->db->db->query('SELECT * FROM `np1172_r2`.`vapaa` WHERE toistuva = FALSE AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika ei vapautunut vaikka pitäisi");
+    }
+
+    public function testOpettajaLisaaToistuvaAika_onnistuu() {
+        $this->db = new Tietokanta();
+
+        $this->db->vapauta_aika($this->opettajaID1, "2017-03-15 01:00:00", "2017-03-15 05:00:00", true, $this->opettajaID1, "OPETTAJA");
+        $this->assertEquals(1, $this->db->db->query('SELECT * FROM `np1172_r2`.`vapaa` WHERE toistuva = TRUE AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika ei vapautunut vaikka pitäisi");
+    }
+
+    public function testOpettajaLisaaPaivystysAika_onnistuu() {
+        $this->AssertTrue(false, "Ei toteutettu");
+    }
+
+    public function testOpettajaLisaaAikaToiselleOpettajalle_epaonnistuu() {
+        $this->db = new Tietokanta();
+
+        $this->db->vapauta_aika($this->opettajaID2, "2017-03-15 01:00:00", "2017-03-15 05:00:00", true, $this->opettajaID1, "OPETTAJA");
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`vapaa` WHERE toistuva = TRUE AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vapautui vaikka ei pitäisi");
+    }
+
+    public function testOpiskelijaLisaaAika_epaonnistuu() {
+        $this->db = new Tietokanta();
+
+        $this->db->vapauta_aika($this->opiskelijaID1, "2017-03-15 01:00:00", "2017-03-15 05:00:00", true, $this->opiskelijaID1, "OPISKELIJA");
+        $this->assertEquals(0, $this->db->db->query('SELECT * FROM `np1172_r2`.`vapaa` WHERE toistuva = TRUE AND opettaja_idopettaja = ' . $this->opettajaID1)->num_rows, "Aika vapautui vaikka ei pitäisi");
+    }
+
     protected function suorita_sql($sql)
     {
         if (!$this->db->db->query($sql)) {

@@ -290,7 +290,7 @@ class Tietokanta
 				$sql = "SELECT start, opiskelija_idopiskelija FROM varaus WHERE opiskelija_idopiskelija =$kuka_muuttaa AND idvaraus =$varauksen_id";
 				$tulos = $this->db->query($sql);
 				$row = $tulos->fetch_assoc();
-				if ($row != NULL && $this->onko_vanhentunut($row[start])) {
+				if ($row != NULL && $this->onko_vanhentunut($row['start'])) {
 				
 					$sql = "UPDATE varaus SET title='$asia', start ='$alkamisaika', stop ='$loppumisaika' where idvaraus =$varauksen_id";
 					$tulos = $this->db->query($sql);
