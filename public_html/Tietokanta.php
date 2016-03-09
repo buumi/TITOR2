@@ -106,7 +106,7 @@ class Tietokanta
 	
 	if ($tulos) {
 		$row = $tulos->fetch_assoc();
-		$alkamisaika = $row[start];
+		$alkamisaika = $row['start'];
 			
 
 		if($this->onko_vanhentunut($alkamisaika)) {	
@@ -192,14 +192,14 @@ class Tietokanta
 		$result = $this->db->query($query);
 
 		while ($value = $result->fetch_assoc()) {
-			$entry = array("id"=>$value[idvaraus], "start"=>$value[start], "end"=>$value[stop], "idopiskelija"=>$value[opiskelija_idopiskelija], "title"=>$value[title]);
+			$entry = array("id"=>$value['idvaraus'], "start"=>$value['start'], "end"=>$value['stop'], "idopiskelija"=>$value['opiskelija_idopiskelija'], "title"=>$value['title']);
 			array_push($temp_array, $entry);
 	}
 		$query = "SELECT * FROM vapaa WHERE opettaja_idopettaja = $kenen_kalenteri";
 		$result = $this->db->query($query);
 		
 		while ($value = $result->fetch_assoc()) {
-			$entry = array("id"=>$value[idvaraus], "start"=>$value[start], "end"=>$value[stop], "rendering"=>"background");
+			$entry = array("id"=>$value['idvapaa'], "start"=>$value['start'], "end"=>$value['stop'], "rendering"=>"background");
 			array_push($temp_array, $entry);
 	}
 	}
